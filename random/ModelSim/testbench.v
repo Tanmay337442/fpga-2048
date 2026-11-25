@@ -23,15 +23,16 @@ module testbench();
                 reset <= 1'b1;
                 enable <= 1'b0;
                 grid_in <= 64'h1010010110100101; // checker pattern of empty spaces and 2's
-                #20;
+                @(negedge clk);
                 reset <= 1'b0;
                 enable <= 1'b1;
                 @(posedge complete);
+                @(negedge clk);
                 enable <= 1'b0;
-                #20;
+                @(negedge clk);
                 enable <= 1'b1;
                 @(posedge complete);
-                #20;
+                @(negedge clk);
                 enable <= 1'b0;
         end
 endmodule
