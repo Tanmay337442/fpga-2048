@@ -9,7 +9,7 @@ z2
 cModel Technology
 Z0 dC:/Users/tanma/Desktop/fpga-2048/endchecker/ModelSim
 vcompare_adjacent
-Z1 !s110 1795595666
+Z1 !s110 1795595810
 !i10b 1
 !s100 l2`B8V4FFJ^3`dKPRd6]z3
 ICZo1lgTlO?9QMd9@DZKX?3
@@ -23,7 +23,7 @@ Z6 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z7 !s108 1795595666.000000
+Z7 !s108 1795595810.000000
 Z8 !s107 ../endchecker.v|
 Z9 !s90 -reportprogress|300|../endchecker.v|
 !i113 1
@@ -131,11 +131,11 @@ R10
 vtestbench
 R1
 !i10b 1
-!s100 HoO6glXgiMY8chNHI`McJ0
-IL7RkgVi6C]:c?1>SbQHKe0
+!s100 N<X[4bCL^0QB09ge8b2Y`0
+ITAYl`3]9i?^4bOk1<^:mi2
 R2
 R0
-R3
+w1795595778
 8testbench.v
 Ftestbench.v
 L0 3
