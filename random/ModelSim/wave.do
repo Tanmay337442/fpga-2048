@@ -2,7 +2,10 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate -label CLOCK_50 -radix binary /testbench/clk
 add wave -noupdate -label reset -radix binary /testbench/reset
-add wave -noupdate -label generated_num -radix hexadecimal /testbench/generated_num
+add wave -noupdate -label enable -radix binary /testbench/enable
+add wave -noupdate -label grid_in -radix hexadecimal /testbench/grid_in
+add wave -noupdate -label grid_out -radix hexadecimal /testbench/grid_out
+add wave -noupdate -label complete -radix binary /testbench/complete
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {10000 ps} 0}
 quietly wave cursor active 1
@@ -20,4 +23,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ps} {120 ns}
+WaveRestoreZoom {0 ps} {2000 ns}

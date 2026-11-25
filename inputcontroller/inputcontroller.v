@@ -1,4 +1,4 @@
-module inputcontroller(clk, reset, key, move_2bit, keypressed, enable);
+module inputcontroller(clk, reset, key, move_2bit, enable);
     input clk, reset;
     input [3:0] key;
     output reg [1:0] move_2bit; // left bit gives transpose, right bit gives flip
@@ -16,27 +16,30 @@ module inputcontroller(clk, reset, key, move_2bit, keypressed, enable);
             enable <= 1'b0;
         end
         else begin
+            // set enable low
             enable <= 1'b0;
-            if (!key[0] & !keypressed) begin
-                move_2bit <= 2'b00;
-                keypressed <= 1'b1;
-                enable <= 1'b1;
+            // make sure a key is pressed by itself
+            if (!key[3] & !keypressed) begin
+                move_2bit <= 2'b00; // set encoded move
+                keypressed <= 1'b1; // set keypressed high
+                enable <= 1'b1; // set enable high
             end
-            else if (!key[1] & !keypressed) begin
+            else if (!key[2] & !keypressed) begin
                 move_2bit <= 2'b01;
                 keypressed <= 1'b1;
                 enable <= 1'b1;
             end
-            else if (!key[2] & !keypressed) begin
+            else if (!key[1] & !keypressed) begin
                 move_2bit <= 2'b10;
                 keypressed <= 1'b1;
                 enable <= 1'b1;
             end
-            else if (!key[3] & !keypressed) begin
+            else if (!key[0] & !keypressed) begin
                 move_2bit <= 2'b11;
                 keypressed <= 1'b1;
                 enable <= 1'b1;
             end
+            // reset keypressed if nothing is being held
             else if (key[3] & key[2] & key[1] & key[0] & keypressed) begin
                 keypressed <= 1'b0;
             end

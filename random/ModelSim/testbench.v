@@ -1,41 +1,37 @@
 `timescale 1ns / 1ps
 
 module testbench();
-        reg reset, clk;
-        wire [15:0] generated_num;
-        lfsr U1(reset, clk, generated_num);
+        parameter CLOCK_PERIOD = 20;
+        reg clk, reset, enable;
+        reg [63:0] grid_in;
+        wire [63:0] grid_out;
+        wire complete;
+	random U1 (clk, reset, enable, grid_in, grid_out, complete);
+        
+        // initialize clock
         initial begin
-                // reset lfsr by turning on reset and pulsing clock
-                #20;
-                reset <= 1'b1;
                 clk <= 1'b0;
-                #20;
-                clk <= 1'b1;
-                #20;
-                clk <= 1'b0;
-                #20;
-                // turn off reset and repeatedly pulse clock
-                reset <= 1'b0;
-                #20;
-                clk <= 1'b1;
-                #20;
-                clk <= 1'b0;
-                #20;
-                #20;
-                clk <= 1'b1;
-                #20;
-                clk <= 1'b0;
-                #20;
-                #20;
-                clk <= 1'b1;
-                #20;
-                clk <= 1'b0;
-                #20;
-                #20;
-                clk <= 1'b1;
-                #20;
-                clk <= 1'b0;
-                #20;
+	end
 
+        always @(*) begin
+	        #(CLOCK_PERIOD / 2);
+                clk <= ~clk;
+	end
+
+        initial begin
+                // pulse reset high
+                reset <= 1'b1;
+                enable <= 1'b0;
+                grid_in <= 64'h1010010110100101; // checker pattern of empty spaces and 2's
+                #20;
+                reset <= 1'b0;
+                enable <= 1'b1;
+                @(posedge complete);
+                enable <= 1'b0;
+                #20;
+                enable <= 1'b1;
+                @(posedge complete);
+                #20;
+                enable <= 1'b0;
         end
 endmodule
