@@ -63,8 +63,6 @@ module testbench();
                 #20;
                 clk <= 1'b1;
                 #20;
-                clk <= 1'b0;
-                #20;
                 // let go of all keys
                 key <= 4'b1111;
                 clk <= 1'b0;
