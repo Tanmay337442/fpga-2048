@@ -22,17 +22,78 @@ module testbench();
                 // pulse reset high
                 reset <= 1'b1;
                 enable <= 1'b0;
-                grid_in <= 64'h1010010110100101; // checker pattern of empty spaces and 2's
+                grid_in <= 64'h0000000000000000; // checker pattern of empty spaces and 2's
                 @(negedge clk);
                 reset <= 1'b0;
+                // enable high 
                 enable <= 1'b1;
+                // wait until generated random number in grid
                 @(posedge complete);
                 @(negedge clk);
+                // enable low
                 enable <= 1'b0;
                 @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                // enable high 
                 enable <= 1'b1;
+                // wait until generated random number in grid
                 @(posedge complete);
                 @(negedge clk);
+                // enable low
+                enable <= 1'b0;
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                // enable high 
+                enable <= 1'b1;
+                // wait until generated random number in grid
+                @(posedge complete);
+                @(negedge clk);
+                // enable low
+                enable <= 1'b0;
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                @(negedge clk);
+                // enable high 
+                enable <= 1'b1;
+                // wait until generated random number in grid
+                @(posedge complete);
+                @(negedge clk);
+                // enable low
                 enable <= 1'b0;
         end
 endmodule
