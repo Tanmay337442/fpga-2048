@@ -1,17 +1,12 @@
-// add linear feedback shift register - adapted from https://www.youtube.com/watch?v=Mg52A84Mcps
-module lfsr(clk, reset, seed_out);
-    input clk, reset;
+// add linear feedback shift register - modified from https://www.youtube.com/watch?v=Mg52A84Mcps
+module lfsr(clk, seed_out);
+    input clk;
     parameter seed_in = 16'hBEEF;
-    output reg [15:0] seed_out;
+    output reg [15:0] seed_out = seed_in;
     wire next_bit;
     assign next_bit = ((seed_out[15] ^ seed_out[13]) ^ seed_out[12]) ^ seed_out[10];
     always @(posedge clk) begin
-        if (reset) begin
-            seed_out <= seed_in;
-        end
-        else begin
-            seed_out <= {seed_out[14:0], next_bit};
-        end
+        seed_out <= {seed_out[14:0], next_bit};
     end
 endmodule
 
@@ -22,13 +17,13 @@ module random(clk, reset, enable, grid_in, grid_out, complete);
     output reg complete;
     output reg [63:0] grid_out;
     wire [15:0] init_pos; // initial random starting seed
-    lfsr pos_lfsr(clk, reset, init_pos);
+    lfsr pos_lfsr(clk, init_pos);
 
     reg [1:0] currentstate;
     parameter [1:0] WAITING = 2'b00, SELECTING = 2'b01, COMPLETED = 2'b10; // fsm based on states of whether to select a position
    
     
-    reg [3:0] select_pos; // position to insert 2 starting with 4 LSB of initial position
+    reg [3:0] select_pos; // position to insert 2 starting with 4 MSB of initial position
     // fsm that moves through states where each one is a cell in the grid
     parameter [3:0] A = 4'd0, B = 4'd1, C = 4'd2, D = 4'd3, E = 4'd4, F = 4'd5, G = 4'd6,
         H = 4'd7, I = 4'd8, J = 4'd9, K = 4'd10, L = 4'd11, M = 4'd12, N = 4'd13, O = 4'd14, P = 4'd15;
@@ -42,14 +37,16 @@ module random(clk, reset, enable, grid_in, grid_out, complete);
         else begin
             // based on states of whether to select a position
             case (currentstate)
+                // set complete low and initialize starting select position
                 WAITING: begin
                     complete <= 1'b0;
                     if (enable) begin
-                        select_pos <= init_pos[3:0];
+                        select_pos <= init_pos[15:12];
                         grid_out <= grid_in;
                         currentstate <= SELECTING;
                     end
                 end
+                // select a cell and add a 2 then move to completed
                 SELECTING: begin
                     // cases of cells to select to insert 2
                     case (select_pos)
@@ -170,8 +167,11 @@ module random(clk, reset, enable, grid_in, grid_out, complete);
                     endcase
                 end
                 COMPLETED: begin
+                    // set complete high
                     complete <= 1'b1;
+                    // when enable goes low then complete goes low again and state moves back to waiting
                     if (!enable) begin
+                        complete <= 1'b0;
                         currentstate <= WAITING;
                     end
                 end

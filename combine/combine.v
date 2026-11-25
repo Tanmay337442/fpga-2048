@@ -44,7 +44,7 @@ module combine(grid_in,
     input [63:0] grid_in;
     output [63:0] grid_out;
     output [31:0] score_to_add;
-    wire [5:0] score0, score1, score2, score3;
+    wire [31:0] score0, score1, score2, score3;
     combine_row c0(grid_in[63:48], grid_out[63:48], score0);
     combine_row c1(grid_in[47:32], grid_out[47:32], score1);
     combine_row c2(grid_in[31:16], grid_out[31:16], score2);
