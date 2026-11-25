@@ -24,5 +24,11 @@ module testbench();
                 reset <= 1'b0;
                 // wait 100 cycles and should be initialized by then
                 #2000;
+                // pulse reset high
+                reset <= 1'b1;
+                #20;
+                reset <= 1'b0;
+                // wait 100 cycles and should be initialized by then
+                #2000;
         end
 endmodule
