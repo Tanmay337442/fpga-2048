@@ -23,12 +23,13 @@ module testbench();
                 #20;
                 reset <= 1'b0;
                 // wait 100 cycles and should be initialized by then
-                #2000;
+                @(posedge initialized);
+                @(negedge clk);
                 // pulse reset high
                 reset <= 1'b1;
-                #20;
+                @(negedge clk);
                 reset <= 1'b0;
                 // wait 100 cycles and should be initialized by then
-                #2000;
+                @(posedge initialized);
         end
 endmodule
