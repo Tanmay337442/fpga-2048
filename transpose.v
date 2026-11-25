@@ -11,7 +11,7 @@ module mux2to1 (x,y,s,f);
     end
 
     //Transpose, transpose = 1
-    else begin
+    else if (s == 1'b1) begin
       f = y;
     end
   end
