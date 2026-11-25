@@ -14,8 +14,8 @@ module testbench();
                 // playing case - merges possible
                 grid_in = 64'h1111111111111111;
                 #30;
-                // playing case - empty
-                grid_in = 64'h0000000000000000;
+                // both win and loss case
+                grid_in = 64'h12122121b2122121;
                 #30;
         end
 endmodule
